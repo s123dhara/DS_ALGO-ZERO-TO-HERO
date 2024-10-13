@@ -1,0 +1,23 @@
+class Solution {
+
+    //approach - 2
+    
+    public int solve(int[] nums, int i, int xor) {
+
+        // Base case
+        if (i == nums.length) {
+            return xor;
+        }
+
+        int include = solve(nums, i + 1, nums[i] ^ xor);
+        int exclue = solve(nums, i + 1, xor);
+
+        return include + exclue;
+    }
+
+    public int subsetXORSum(int[] nums) {
+
+        return solve(nums, 0, 0);
+
+    }
+}
