@@ -45,12 +45,14 @@ public class Longest_Happy_String {
                     // then push it to Heap
                     pq.offer(current);
                 }
+
                 lastUsed = current;
             } else {
 
                 // thats mean : last character either null for 1st Case
                 // or, Last character is same with current character
                 // We should poll next character and add it once
+
                 if (pq.isEmpty())
                     break; // No furthur checking is Required
 
@@ -66,6 +68,7 @@ public class Longest_Happy_String {
                 if (current.count > 0) { // we have pulled it out , then add it for furthur execution
                     pq.offer(current);
                 }
+
                 lastUsed = next;
             }
 
