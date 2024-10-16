@@ -15,7 +15,6 @@ public class Longest_Happy_String {
             this.count = count;
         }
     }
-
     public static String longestDiverseString(int a, int b, int c) {
         PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) -> y.count - x.count); // Max-Heap 
 
