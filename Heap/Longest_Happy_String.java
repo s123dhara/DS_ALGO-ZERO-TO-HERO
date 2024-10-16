@@ -68,12 +68,10 @@ public class Longest_Happy_String {
                 if (current.count > 0) { // we have pulled it out , then add it for furthur execution
                     pq.offer(current);
                 }
-
                 lastUsed = next;
             }
 
         }
-
         return result.toString();
     }
 
