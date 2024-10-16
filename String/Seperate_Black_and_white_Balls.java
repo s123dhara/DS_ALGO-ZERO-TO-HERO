@@ -19,7 +19,6 @@ public class Seperate_Black_and_white_Balls {
             }
 
         }
-
         return ans;
 
 
