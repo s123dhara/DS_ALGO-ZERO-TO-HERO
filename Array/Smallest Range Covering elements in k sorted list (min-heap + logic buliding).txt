@@ -12,6 +12,7 @@ class Solution {
 
     }
 
+
     public static int[] smallestRange(List<List<Integer>> nums) {
         PriorityQueue<Node> pq = new PriorityQueue<>((a,b) -> a.data - b.data); // Min - heap depends on Data
 
