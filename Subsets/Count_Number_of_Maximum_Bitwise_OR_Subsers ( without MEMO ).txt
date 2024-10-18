@@ -1,0 +1,35 @@
+class Solution {
+    public static int MAX;
+    public static int N;
+
+    public static int solve(int[] nums, int currentIndex, int currentBitWiseOR) {
+        if (currentIndex == N) {
+            if (currentBitWiseOR == MAX) {
+                return 1;
+            }
+
+            return 0;
+        }
+
+        int takeCount = solve(nums, currentIndex + 1, currentBitWiseOR | nums[currentIndex]);
+        int noTakeCount = solve(nums, currentIndex + 1, currentBitWiseOR);
+
+        return takeCount + noTakeCount;
+
+    }
+
+    public static int countMaxOrSubsets(int[] nums) {
+        N = nums.length;
+        int maximumBitWiseOR = nums[0];
+        for (int num : nums) {
+            maximumBitWiseOR = maximumBitWiseOR | num;
+        }
+
+        MAX = maximumBitWiseOR;
+
+        int result = solve(nums, 0, 0);
+
+        return result;
+    }
+
+}
