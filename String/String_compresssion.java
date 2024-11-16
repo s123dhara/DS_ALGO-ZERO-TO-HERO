@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class String_compresssion {
 
     public static String compressedString(String word) {
