@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Rotating_The_Box {
+
+    public static char[][] rotateTheBox(char[][] box) {
+        int m = box.length;
+        int n = box[0].length;
+
+        // Step 1: Rotate the box clockwise by 90 degrees
+        char[][] rotatedBox = new char[n][m];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                rotatedBox[j][m - i - 1] = box[i][j];
+            }
+        }
+
+        // Step 2: Apply gravity on the rotated box
+        for (int j = 0; j < rotatedBox[0].length; j++) { // Iterate over columns
+            ArrayList<Integer> emptySpot = new ArrayList<>();
+            for (int i = rotatedBox.length - 1; i >= 0; i--) { // Iterate bottom to top
+                if (rotatedBox[i][j] == '*') {
+                    // If obstacle is found, reset the empty spot tracker
+                    emptySpot.clear();
+                } else if (rotatedBox[i][j] == '.') {
+                    // Add empty spot to tracker
+                    emptySpot.add(i);
+                } else if (rotatedBox[i][j] == '#') {
+                    // Move stone down to the lowest empty spot if there is one
+                    if (!emptySpot.isEmpty()) {
+                        rotatedBox[emptySpot.get(0)][j] = '#';
+                        rotatedBox[i][j] = '.';
+                        emptySpot.add(i);
+                        emptySpot.remove(0);
+                    }
+                }
+            }
+        }
+
+        return rotatedBox;
+    }
+
+    public static void main(String[] args) {
+        char[][] box = { { '#', '.', '*', '.' }, { '#', '#', '*', '.' } };
+        char[][] result = rotateTheBox(box);
+        System.out.println("Result:");
+        for (char[] row : result) {
+            System.out.println(Arrays.toString(row));
+        }
+    }
+}
