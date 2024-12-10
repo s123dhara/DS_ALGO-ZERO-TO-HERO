@@ -1,5 +1,4 @@
 import java.util.Arrays;
-
 public class Special_Array_II {
 
     public static boolean[] isArraySpecial(int[] nums, int[][] queries) {
