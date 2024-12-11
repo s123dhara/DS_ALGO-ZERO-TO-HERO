@@ -1,0 +1,23 @@
+// Approach - 2 : Better Sliding Window
+class Solution {
+    public int maximumBeauty(int[] nums, int k) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        int max_count = 0;        
+
+        int i = 0;
+        int j = 0;
+
+        while(j < n) {
+
+            while(nums[j] - nums[i] > 2 * k) {
+                i += 1;                
+            }
+
+            max_count = Math.max(max_count, j - i + 1);
+            j += 1;
+        }
+
+        return max_count;
+    }
+}

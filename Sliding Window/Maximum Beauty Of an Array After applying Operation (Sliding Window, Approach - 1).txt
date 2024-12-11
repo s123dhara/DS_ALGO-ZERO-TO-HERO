@@ -1,0 +1,32 @@
+// Approach - 1 : basic Sliding Window
+class Solution {
+    public int maximumBeauty(int[] nums, int k) {
+        int n = nums.length;
+        Arrays.sort(nums); // Sort the array first
+        int max_count = 0;
+        int curr_count = 0;
+
+        int i = 0; // Left pointer
+        int j = 0; // Right pointer
+
+        while (j < n) {
+            // Check if the current window violates the condition
+            while (nums[j] - nums[i] > 2 * k) {
+                i += 1; // Move the left pointer
+                curr_count -= 1; // Decrease the count since element at i is out of range
+            }
+
+            // If condition is met, include nums[j]
+            if (nums[j] - nums[i] <= 2 * k) {
+                curr_count += 1;
+            }
+
+            // Update max_count after processing nums[j]
+            max_count = Math.max(max_count, curr_count);
+
+            j += 1; // Move the right pointer
+        }
+
+        return max_count;
+    }
+}
