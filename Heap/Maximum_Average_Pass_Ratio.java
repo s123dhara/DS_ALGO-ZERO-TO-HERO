@@ -1,0 +1,64 @@
+import java.util.PriorityQueue;
+
+public class Maximum_Average_Pass_Ratio {
+    static class Pair {
+        int pass;
+        int total;
+        double gain; // Calculate gain
+
+        Pair(int pass, int total, double gain) {
+            this.pass = pass;
+            this.total = total;
+            this.gain = gain;
+        }
+    }
+
+    private static double calculateGain(int pass, int total) {
+        double currentRatio = (double) pass / total;
+        double newRatio = (double) (pass + 1) / (total + 1);
+        return newRatio - currentRatio;
+    }
+
+    public static double maxAverageRatio(int[][] classes, int extraStudents) {
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> Double.compare(b.gain, a.gain)); // Max-Heap based on gain
+        double sum = 0;
+        int n = classes.length;
+
+        // Initialize the priority queue with all classes
+        for (int[] classArr : classes) {
+            pq.offer(new Pair(classArr[0], classArr[1], calculateGain(classArr[0], classArr[1])));
+        }
+
+        // Distribute extra students
+        while (extraStudents > 0) {
+            Pair currclass = pq.poll(); // Get the class with the maximum gain
+            currclass.pass++;
+            currclass.total++;
+            currclass.gain = calculateGain(currclass.pass, currclass.total); // Recalculate gain
+            pq.offer(new Pair(currclass.pass, currclass.total, currclass.gain)); // Reinsert into the priority queue
+            extraStudents--;
+        }
+
+        // Calculate the final average pass ratio
+        while (!pq.isEmpty()) {
+            Pair p = pq.poll();
+            sum += (double) p.pass / p.total;
+        }
+
+        return sum / n;
+    }
+
+    public static void main(String[] args) {
+        int[][] classes = { { 2, 4 }, { 3, 9 }, { 4, 5 }, { 2, 10 } };
+        int extraStudents = 4;
+
+        System.out.println("OUTPUT : " + maxAverageRatio(classes, extraStudents));
+
+        double sum = 0;
+        for (int arr[] : classes) {
+            sum += (double) arr[0] / arr[1];
+            System.out.println((double) arr[0] / arr[1]);
+        }
+        System.out.println((double) sum / 4);
+    }
+}
