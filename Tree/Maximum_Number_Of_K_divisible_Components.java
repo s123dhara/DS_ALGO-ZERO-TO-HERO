@@ -3,6 +3,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/* I have learning a new things about DFS 
+ * So, I have compromised in this solution 
+ * Youtube Link : https://www.youtube.com/watch?v=uXz9VUVBes0 
+ * From this link, I have learned about this topic.
+ * But Still egarly Wating for codeStoryWithMik Video.
+ */
+
 public class Maximum_Number_Of_K_divisible_Components {
     public static int K;
     public static int count;
