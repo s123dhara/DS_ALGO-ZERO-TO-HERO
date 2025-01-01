@@ -1,0 +1,55 @@
+// (2 pass Solution )
+class Solution {
+    public int maxScore(String s) {
+        int n = s.length();
+        int ones = 0;
+        int maxScore = 0;
+
+        for(int i = 0; i < n; i++) {
+            if(s.charAt(i) == '1') {
+                ones++;
+            }
+        }
+
+        int zeros = 0;
+        for(int i = 0; i < n - 1; i++) {
+            if(s.charAt(i) == '0') {
+                zeros++;                
+            }else {
+                ones--;
+            }        
+            maxScore = Math.max(maxScore, zeros + ones);
+        }
+
+        return maxScore;
+    }   
+}
+
+
+//one pass solution 
+
+public class Solution {
+    public int maxScore(String s) {
+        int n = s.length();
+        int result = Integer.MIN_VALUE;
+
+        int zeros = 0;
+        int ones = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            if (s.charAt(i) == '1') {
+                ones++;
+            } else {
+                zeros++;
+            }
+
+            result = Math.max(result, zeros - ones);
+        }
+
+        if (s.charAt(n - 1) == '1') {
+            ones++;
+        }
+
+        return result + ones;
+    }
+}
