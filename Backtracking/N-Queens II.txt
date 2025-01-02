@@ -1,0 +1,59 @@
+class Solution {
+    public static int result;
+    public static int N;
+    public static int[][] board;
+
+    public int totalNQueens(int n) {
+        N = n;
+        result = 0;
+        board = new int[N][N];
+        
+        solveQueen(0);
+
+        return result;
+    }
+    
+    public static void solveQueen(int col) {
+        if(col == N) {
+            // got a solution 
+            result++;
+        }
+
+        // start the program here 
+        for (int i = 0; i < N; i++) {
+            if (isSafe(i, col)) {
+                board[i][col] = 1; // Place the queen
+
+                solveQueen(col + 1); // Recursively place the rest of the queens
+
+                board[i][col] = 0; // Backtrack
+            }
+        }
+    }
+
+    public static boolean isSafe(int row, int col) {
+        // check row on the left 
+        for(int i = 0; i < col; i++) {
+            if(board[row][i] == 1) {
+                return false;
+            }
+        }
+
+        // Check upper diagonal on the left
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 1) {
+                return false;
+            }
+        }
+
+        // Check lower diagonal on the left
+        for (int i = row, j = col; i < N && j >= 0; i++, j--) {
+            if (board[i][j] == 1) {
+                return false;
+            }
+        }
+
+        return true; // No conflicts, position is safe
+
+    }
+}
