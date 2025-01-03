@@ -1,0 +1,25 @@
+// Number of Ways to Split Array
+class Solution {
+    public int waysToSplitArray(int[] nums) {
+        int n = nums.length;
+        long totalSum = 0;
+        for (int num : nums) {
+            totalSum += num; // Calculate the total sum of the array
+        }
+
+        long prefixSum = 0;
+        int count = 0;
+
+        for (int i = 0; i < n - 1; i++) { // Split points go up to n-1
+            prefixSum += nums[i];
+            long suffixSum = totalSum - prefixSum;
+
+            if (prefixSum >= suffixSum) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+}
+ 
