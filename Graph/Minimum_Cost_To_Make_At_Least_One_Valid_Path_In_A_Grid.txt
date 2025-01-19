@@ -1,0 +1,54 @@
+// Solution is TLE because 
+// exponential time complexity 
+
+public class Minimum_Cost_To_Make_At_Least_One_Valid_Path_In_A_Grid {
+    public static int[][] dir = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
+    public static int m;
+    public static int n;
+
+
+    public static int solve(int[][] grid, int i, int j, boolean[][] visited, int cost) {
+        // Base case: reached the bottom-right corner
+        if (i == m - 1 && j == n - 1) {
+            return cost;
+        }
+
+        visited[i][j] = true;
+
+        int minCost = Integer.MAX_VALUE;
+        for (int d = 0; d < 4; d++) {
+            int i_ = i + dir[d][0];
+            int j_ = j + dir[d][1];
+
+            if (i_ >= 0 && j_ >= 0 && i_ < m && j_ < n && !visited[i_][j_]) {
+                int directionCost = (grid[i][j] - 1 == d) ? 0 : 1; // No cost if direction matches
+                int newCost = cost + directionCost;
+
+                minCost = Math.min(minCost, solve(grid, i_, j_, visited, newCost));
+            }
+        }
+
+        // Backtrack
+        visited[i][j] = false;
+
+        return minCost;
+    }
+
+    public static int minCost(int[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+        boolean[][] visited = new boolean[m][n];
+        return solve(grid, 0, 0, visited, 0);
+    }
+
+    public static void main(String[] args) {
+        int[][] grid = {
+                { 1, 1, 1, 1 },
+                { 2, 2, 2, 2 },
+                { 1, 1, 1, 1 },
+                { 2, 2, 2, 2 }
+        };
+
+        System.out.println("OUTPUT : " + minCost(grid));
+    }
+}

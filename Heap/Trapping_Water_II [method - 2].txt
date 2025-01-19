@@ -1,0 +1,42 @@
+// T.C : O(M * N * LOG(M * N))
+// S.C : O(M * N)
+class Solution {
+    public static int[][] dir = { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
+    public static int trapRainWater(int[][] heightMap) {
+        int totalWaterTrap = 0;
+        int m = heightMap.length;
+        int n = heightMap[0].length;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
+        boolean[][] visited = new boolean[m][n];
+        for (int j = 0; j < n; j++) {
+            pq.offer(new int[] { heightMap[0][j], 0, j });
+            visited[0][j] = true;
+
+            pq.offer(new int[] { heightMap[m - 1][j], m - 1, j });
+            visited[m - 1][j] = true;
+        }
+        for (int i = 1; i < m - 1; i++) {        
+            pq.offer(new int[] { heightMap[i][0], i, 0 });
+            visited[i][0] = true;
+
+            pq.offer(new int[] { heightMap[i][n - 1], i, n - 1 });
+            visited[i][n - 1] = true;
+        }
+
+        while (!pq.isEmpty()) {
+            int[] currPair = pq.poll();            
+            int x = currPair[1];
+            int y = currPair[2];        
+            for (int[] d : dir) {
+                int x_ = x + d[0];
+                int y_ = y + d[1];
+                if (x_ >= 0 && x_ < m && y_ >= 0 && y_ < n && !visited[x_][y_]) {
+                    totalWaterTrap += Math.max(currPair[0] - heightMap[x_][y_], 0);
+                    pq.offer(new int[] { Math.max(currPair[0], heightMap[x_][y_]), x_, y_ });
+                    visited[x_][y_] = true;
+                }
+            }
+        }
+        return totalWaterTrap;
+    }
+}

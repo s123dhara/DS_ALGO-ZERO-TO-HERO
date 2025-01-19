@@ -1,0 +1,86 @@
+// T.C : O(M * N * LOG(M * N))
+// S.C : O(M * N)
+// Using Class Comparator, Method - 1
+class Pair {
+    int height;
+    int[] cordinate;
+
+    Pair(int height, int[] cordinate) {
+        this.height = height;
+        this.cordinate = cordinate;
+    }
+}
+
+class PairComparator implements Comparator<Pair> {
+
+    @Override
+    public int compare(Pair o1, Pair o2) {
+        return o1.height - o2.height;
+    }
+}
+class Solution {
+    public static int[][] dir = { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
+
+    public static int trapRainWater(int[][] heightMap) {
+        int totalWaterTrap = 0;
+        int m = heightMap.length;
+        int n = heightMap[0].length;
+        PriorityQueue<Pair> pq = new PriorityQueue<>(new PairComparator());
+        boolean[][] visited = new boolean[m][n];
+        // Step 1: Push all Boundary cells in Min-heap
+
+        // Push all boundary elements into the heap
+
+        // Push the first and last rows
+        for (int j = 0; j < n; j++) {
+            // Top row
+            int[] topCoordinate = new int[] { 0, j };
+            int topHeight = heightMap[0][j];
+            pq.offer(new Pair(topHeight, topCoordinate));
+            visited[0][j] = true;
+
+            // Bottom row
+            int[] bottomCoordinate = new int[] { m - 1, j };
+            int bottomHeight = heightMap[m - 1][j];
+            pq.offer(new Pair(bottomHeight, bottomCoordinate));
+            visited[m - 1][j] = true;
+        }
+
+        // Push the first and last columns (excluding corners to avoid duplicates)
+        for (int i = 1; i < m - 1; i++) {
+            // Left column
+            int[] leftCoordinate = new int[] { i, 0 };
+            int leftHeight = heightMap[i][0];
+            pq.offer(new Pair(leftHeight, leftCoordinate));
+            visited[i][0] = true;
+
+            // Right column
+            int[] rightCoordinate = new int[] { i, n - 1 };
+            int rightHeight = heightMap[i][n - 1];
+            pq.offer(new Pair(rightHeight, rightCoordinate));
+            visited[i][n - 1] = true;
+        }
+
+        while (!pq.isEmpty()) {
+            Pair currPair = pq.poll();
+            int currHeight = currPair.height;
+            int x = currPair.cordinate[0];
+            int y = currPair.cordinate[1];
+
+            // check valid Boundary and Explore the neighbour
+            for (int[] d : dir) {
+                int x_ = x + d[0];
+                int y_ = y + d[1];
+
+                if (x_ >= 0 && x_ < m && y_ >= 0 && y_ < n && !visited[x_][y_]) {
+                    totalWaterTrap += Math.max(currHeight - heightMap[x_][y_], 0);
+                    pq.offer(new Pair(Math.max(currHeight, heightMap[x_][y_]), new int[] { x_, y_ }));
+
+                    visited[x_][y_] = true;
+                }
+            }
+        }
+
+        return totalWaterTrap;
+    }
+}
