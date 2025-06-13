@@ -1,0 +1,39 @@
+class Solution {
+    public boolean canFormPairs(int[] nums, int p, int maxDiff) {
+        int n = nums.length;
+        int count = 0;
+
+        for(int i = 1; i < n; i++) {
+            if(nums[i] - nums[i - 1] <= maxDiff) {
+                count++;
+                i++; // Skip the Next Index for Overlapping
+            }
+        }
+
+        return count >= p;
+    }
+
+
+    public int minimizeMax(int[] nums, int p) {
+        int n = nums.length;
+        //Binary Search Works on Sorted Array
+        Arrays.sort(nums);
+
+        int low = 0;
+        int high = nums[n - 1] - nums[0]; // high will track the Difference
+        int ans = high; // Let's Check Can we Minimize the difference. 
+
+        while(low <= high) {
+            int mid = (low + high) / 2;
+            if(canFormPairs(nums, p, mid)) {
+                ans = mid;
+                high = mid - 1;
+            }else {
+                low = mid + 1;
+            }
+        }
+
+
+        return ans;
+    }
+}
