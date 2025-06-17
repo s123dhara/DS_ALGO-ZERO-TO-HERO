@@ -72,6 +72,38 @@ public class Longest_Cycle_Graph {
         return result == 0 ? -1 : result;
     }
 
+    /*
+        T.C : O(N)
+        * public int longestCycle(int[] edges) 
+        {
+            int n = edges.length;
+            boolean[] visited = new boolean[n];
+            int maxCycleLen = -1;
+
+            for (int i = 0; i < n; i++) {
+                if (!visited[i]) {
+                    Map<Integer, Integer> pathIndexMap = new HashMap<>();
+                    int node = i;
+                    int step = 0;
+
+                    while (node != -1 && !visited[node]) {
+                        pathIndexMap.put(node, step++);
+                        visited[node] = true;
+                        node = edges[node];
+                    }
+
+                    if (node != -1 && pathIndexMap.containsKey(node)) {
+                        // Cycle detected
+                        int cycleLen = step - pathIndexMap.get(node);
+                        maxCycleLen = Math.max(maxCycleLen, cycleLen);
+                    }
+                }
+            }
+
+            return maxCycleLen;
+        }
+     */
+
     public static void main(String[] args) {
         // Example 1: Output = 3
         int[] edges = { 3, 3, 4, 2, 3 };
