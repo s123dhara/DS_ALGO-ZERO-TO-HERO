@@ -23,7 +23,7 @@ public class Count_Number_Of_Bad_Pairs {
 
             if (map.isEmpty()) {
                 // map.put(diff[i], i);
-                map.computeIfAbsent(diff[i], key -> new ArrayList<>()).add(i);
+                map.computeIfAbsent(diff[i], _ -> new ArrayList<>()).add(i);
                 counter++;
                 continue;
             }
@@ -43,7 +43,7 @@ public class Count_Number_Of_Bad_Pairs {
             System.out.println("current Map : \n" + map);
             System.out.println("current value = " + diff[i]);
             System.out.println("Result = " +result);
-            map.computeIfAbsent(diff[i], key -> new ArrayList<>()).add(i);
+            map.computeIfAbsent(diff[i], _ -> new ArrayList<>()).add(i);
 
         }
 
