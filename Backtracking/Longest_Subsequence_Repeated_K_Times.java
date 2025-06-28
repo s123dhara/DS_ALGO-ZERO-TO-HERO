@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Longest_Subsequence_Repeated_K_Times {
 
     String result = "";
