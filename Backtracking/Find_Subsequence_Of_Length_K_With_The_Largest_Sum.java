@@ -25,65 +25,92 @@ public class Find_Subsequence_Of_Length_K_With_The_Largest_Sum {
         return result;
     }
 
+    public int[] ImprovedmaxSubsequence(int[] nums, int k) {
+
+        int n = nums.length;
+        int[] result = new int[k];
+        boolean[] used = new boolean[n];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]); // Min-heap
+
+        for (int i = 0; i < n; i++) {
+            pq.add(new int[] { nums[i], i });
+            used[i] = true;
+
+            if (pq.size() > k) {
+                int[] temp = pq.poll();
+                used[temp[1]] = false;
+            }
+        }
+
+        int idx = 0;
+        for(int i = 0; i < n; i++) {
+            if(used[i])
+                result[idx++] = nums[i];
+        }         
+
+        return result;
+    }
+
     public static void main(String[] args) {
         int[] nums = { -1, -2, 3, 4 };
         // int[] nums = { -35 };
         int k = 3;
 
-        int[] result = new Find_Subsequence_Of_Length_K_With_The_Largest_Sum().maxSubsequence(nums, k);
+        int[] result = new Find_Subsequence_Of_Length_K_With_The_Largest_Sum().ImprovedmaxSubsequence(nums, k);
 
         System.out.println("OUTPUT : " + Arrays.toString(result));
 
     }
 }
 /*
-class Solution {
-    private List<Integer> result;
-    private int largestSum;
-
-    public boolean solve(int[] nums, int k, int currIndex, int currSum,
-            List<Integer> currList) {
-
-        if (currList.size() > k) {
-            return false;
-        }
-
-        if (currIndex == nums.length) {
-            if (currList.size() == k && currSum > largestSum) {
-                result.clear();
-                result.addAll(currList);
-                largestSum = currSum;
-            }
-            return false;
-        }
-
-        // Include nums[currIndex]
-        // Do
-        currList.add(nums[currIndex]);
-
-        // Explore
-        solve(nums, k, currIndex + 1, currSum + nums[currIndex], currList);
-
-        // Undo
-        currList.remove(currList.size() - 1);
-
-        // Explore
-        // Exclude nums[currIndex]
-        solve(nums, k, currIndex + 1, currSum, currList);
-
-        return false; // Not returning based on success, just completing all possibilities
-    }
-
-    public int[] maxSubsequence(int[] nums, int k) {
-        result = new ArrayList<>();
-        largestSum = Integer.MIN_VALUE;
-
-        solve(nums, k, 0, 0, new ArrayList<>());
-        int[] ans = new int[result.size()];
-        for (int i = 0; i < ans.length; i++) {
-            ans[i] = result.get(i);
-        }
-        return ans;
-    }
-}
+ * class Solution {
+ * private List<Integer> result;
+ * private int largestSum;
+ * 
+ * public boolean solve(int[] nums, int k, int currIndex, int currSum,
+ * List<Integer> currList) {
+ * 
+ * if (currList.size() > k) {
+ * return false;
+ * }
+ * 
+ * if (currIndex == nums.length) {
+ * if (currList.size() == k && currSum > largestSum) {
+ * result.clear();
+ * result.addAll(currList);
+ * largestSum = currSum;
+ * }
+ * return false;
+ * }
+ * 
+ * // Include nums[currIndex]
+ * // Do
+ * currList.add(nums[currIndex]);
+ * 
+ * // Explore
+ * solve(nums, k, currIndex + 1, currSum + nums[currIndex], currList);
+ * 
+ * // Undo
+ * currList.remove(currList.size() - 1);
+ * 
+ * // Explore
+ * // Exclude nums[currIndex]
+ * solve(nums, k, currIndex + 1, currSum, currList);
+ * 
+ * return false; // Not returning based on success, just completing all
+ * possibilities
+ * }
+ * 
+ * public int[] maxSubsequence(int[] nums, int k) {
+ * result = new ArrayList<>();
+ * largestSum = Integer.MIN_VALUE;
+ * 
+ * solve(nums, k, 0, 0, new ArrayList<>());
+ * int[] ans = new int[result.size()];
+ * for (int i = 0; i < ans.length; i++) {
+ * ans[i] = result.get(i);
+ * }
+ * return ans;
+ * }
+ * }
  */

@@ -1,7 +1,7 @@
 public class Longest_Subsequence_Repeated_K_Times {
 
     String result = "";
-
+    
     public void generateSubsequence(StringBuilder curr, int[] requiredFreq, boolean[] validChars, int maxLen, int k,
             String s) {
         if (curr.length() > maxLen) {
