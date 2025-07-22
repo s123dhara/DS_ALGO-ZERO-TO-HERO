@@ -41,5 +41,14 @@ public class Maximum_Matching_Of_Players_With_Trainers {
         System.out.println("OUTPUT :  "
                 + new Maximum_Matching_Of_Players_With_Trainers().matchPlayersAndTrainers(players, trainers));
 
+        // Comparator<int[]> comparator = (a, b) -> {
+        //     if (a[1] == b[1]) {
+        //             return b[0] - a[0]; // If frequencies are the same, sort by value in descending order
+        //         }
+        //         return a[1] - b[1]; // Otherwise, sort by frequency in ascending order
+        // };
+        
+        
+
     }
 }
